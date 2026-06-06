@@ -6,6 +6,9 @@ Early-stage school project focused on porting DOOM to the browser with WebAssemb
 
 This repository is in the setup / early integration phase.
 
+The project folder already contains the DoomGeneric engine source as the upstream base for the port.
+Current work is focused on integrating that engine with a browser/WebAssembly build pipeline.
+
 ## Goal
 
 The goal is to run DOOM in the browser through a WebAssembly-based build while separating the gameplay view and the website interface:

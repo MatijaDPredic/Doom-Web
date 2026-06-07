@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOOM House</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <svg
+    id="scene-outside"
+    class="scene-svg scene-active"
+    viewBox="0 0 1600 900"
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    aria-labelledby="outside-title outside-desc"
+  >
+    <title id="outside-title">Outside the mansion</title>
+    <desc id="outside-desc">A dark mansion exterior with a front door that can be used to enter the house.</desc>
+
+    <image href="assets/mansion.jpg" x="0" y="0" width="1600" height="900" />
+
+    <rect
+      id="front-door"
+      class="door-hotspot"
+      x="800"
+      y="517"
+      width="76"
+      height="160"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Enter the mansion"
+    />
+  </svg>
+
+  <svg
+    id="scene-hallway"
+    class="scene-svg"
+    viewBox="0 0 1600 900"
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    aria-labelledby="hallway-title hallway-desc"
+  >
+    <title id="hallway-title">Main hallway</title>
+    <desc id="hallway-desc">A large hallway inside the mansion with a doorway that leads deeper into the house.</desc>
+
+    <image href="assets/main_hall.png" x="0" y="0" width="1600" height="900" />
+
+    <rect
+      id="exit-hall"
+      class="door-hotspot"
+      x="716"
+      y="306"
+      width="155"
+      height="336"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Enter the doom room"
+    />
+  </svg>
+
+  <svg
+    id="scene-doom"
+    class="scene-svg"
+    viewBox="0 0 1600 900"
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    aria-labelledby="doom-title doom-desc"
+  >
+    <title id="doom-title">Doom room</title>
+    <desc id="doom-desc">A dark room inside the mansion with an exit that returns to the hallway.</desc>
+
+    <image href="assets/doom_room.png" x="0" y="0" width="1600" height="900" />
+
+    <rect
+      id="exit-doom"
+      class="door-hotspot"
+      x="725"
+      y="435"
+      width="120"
+      height="90"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Return to the hallway"
+    />
+  </svg>
+
+  <script src="script.js"></script>
+</body>
+</html>

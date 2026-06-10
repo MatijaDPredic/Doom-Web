@@ -61,6 +61,120 @@
       role="button"
       aria-label="Enter the doom room"
     />
+    <rect
+      id="hallway-powerpanel-hotspot"
+      class="door-hotspot"
+      x="423"
+      y="226"
+      width="72"
+      height="500"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Go to power panel"
+    />
+    <rect
+      id="hallway-study-hotspot"
+      class="door-hotspot"
+      x="1096"
+      y="226"
+      width="72"
+      height="500"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Enter the study room"
+    />
+    <rect
+      id="back-to-outside"
+      class="door-hotspot"
+      x="0"
+      y="800"
+      width="1600"
+      height="100"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Go back outside"
+    />
+  </svg>
+
+  <svg
+    id="scene-study"
+    class="scene-svg"
+    viewBox="0 0 1600 900"
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    aria-labelledby="study-title study-desc"
+  >
+    <title id="study-title">Study Room</title>
+    <desc id="study-desc">A quiet study room with bookshelves and a desk.</desc>
+
+    <!-- Portrait Overlay (behind cutout) -->
+    <image id="study-portrait-overlay" class="portrait-overlay" x="732" y="222" width="171" height="223" preserveAspectRatio="xMidYMid slice" href="assets/study_room_riddle/portraits/portrait_base.png"></image>
+
+    <image href="assets/study_room_riddle/study_room.png" x="0" y="0" width="1600" height="900" />
+
+    <rect
+      id="study-portrait-hotspot"
+      class="door-hotspot"
+      x="732"
+      y="222"
+      width="171"
+      height="223"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Look at the portrait"
+    />
+    <rect
+      id="study-to-hallway"
+      class="door-hotspot"
+      x="0"
+      y="800"
+      width="1600"
+      height="100"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Go back to hallway"
+    />
+  </svg>
+
+  <svg
+    id="scene-portrait"
+    class="scene-svg"
+    viewBox="0 0 1600 900"
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    aria-labelledby="portrait-title portrait-desc"
+  >
+    <title id="portrait-title">Portrait Zoom</title>
+    <desc id="portrait-desc">A close-up view of the portrait in the study room.</desc>
+
+    <!-- Portrait Overlay (behind cutout) -->
+    <image id="zoom-portrait-overlay" class="portrait-overlay" x="640" y="134" width="412" height="541" preserveAspectRatio="xMidYMid slice" href="assets/study_room_riddle/portraits/portrait_base.png"></image>
+
+    <image href="assets/study_room_riddle/study_room_zoomed_portrait.png" x="0" y="0" width="1600" height="900" />
+
+    <rect
+      id="portrait-to-study"
+      class="door-hotspot"
+      x="0"
+      y="800"
+      width="1600"
+      height="100"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Go back to study room"
+    />
   </svg>
 
   <svg
@@ -72,12 +186,12 @@
     aria-labelledby="doom-title doom-desc"
   >
     <title id="doom-title">Doom room</title>
-    <desc id="doom-desc">A dark room inside the mansion with an exit that returns to the hallway.</desc>
+    <desc id="doom-desc">A dark room inside the mansion with exits to the hallway and the monitor.</desc>
 
     <image href="assets/doom_room.png" x="0" y="0" width="1600" height="900" />
 
     <rect
-      id="exit-doom"
+      id="enter-monitor"
       class="door-hotspot"
       x="725"
       y="435"
@@ -87,10 +201,214 @@
       cursor="pointer"
       tabindex="0"
       role="button"
-      aria-label="Return to the hallway"
+      aria-label="Enter the monitor"
+    />
+    <rect
+      id="back-to-hallway"
+      class="door-hotspot"
+      x="0"
+      y="800"
+      width="1600"
+      height="100"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Go back to hallway"
     />
   </svg>
 
-  <script src="script.js"></script>
+  <svg
+    id="scene-monitor"
+    class="scene-svg"
+    viewBox="0 0 1600 900"
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    aria-labelledby="monitor-title monitor-desc"
+  >
+    <title id="monitor-title">Monitor screen</title>
+    <desc id="monitor-desc">A close-up view of a monitor displaying a fake operating system interface.</desc>
+
+    <image href="assets/monitor.png" x="0" y="0" width="1600" height="900" />
+    <rect
+      id="exit-monitor"
+      class="door-hotspot"
+      x="0"
+      y="800"
+      width="1600"
+      height="100"
+      fill="transparent"
+      cursor="pointer"
+      tabindex="0"
+      role="button"
+      aria-label="Exit monitor"
+    />
+  </svg>
+
+  <svg
+    id="scene-panel"
+    class="scene-svg"
+    viewBox="0 0 1600 900"
+    preserveAspectRatio="xMidYMid slice"
+  >
+    <image id="panel-base" href="assets/first puzzle/powerpanel.png" x="0" y="0" width="1600" height="900" />
+    
+    <!-- Full Uncut Images for Solved States -->
+    <image id="panel-on" href="assets/first puzzle/powerpanel_on.png" x="0" y="0" width="1600" height="900" style="display: none; pointer-events: none;" />
+    <image id="panel-open" href="assets/first puzzle/powerpanel_open.png" x="0" y="0" width="1600" height="900" style="display: none; pointer-events: none;" />
+
+    <!-- Switch Overlays (only for 'unsolved' state) -->
+    <g id="switch-group">
+      <image id="switch-left" href="assets/first puzzle/switches/left_off.png" x="-300" y="0" width="1600" height="900" style="pointer-events: none;" />
+      <image id="switch-center" href="assets/first puzzle/switches/center_off.png" x="-15" y="0" width="1600" height="900" style="pointer-events: none;" />
+      <image id="switch-right" href="assets/first puzzle/switches/right_off.png" x="250" y="0" width="1600" height="900" style="pointer-events: none;" />
+    </g>
+
+    <!-- Toggle Hotspots -->
+    <g id="hotspot-group">
+      <rect id="hotspot-left" class="door-hotspot" x="380" y="220" width="200" height="350" fill="transparent" cursor="pointer" />
+      <rect id="hotspot-center" class="door-hotspot" x="700" y="220" width="200" height="350" fill="transparent" cursor="pointer" />
+      <rect id="hotspot-right" class="door-hotspot" x="1020" y="220" width="200" height="350" fill="transparent" cursor="pointer" />
+    </g>
+
+    <!-- Interaction Hotspot for Solved States (allows clicking the panel itself to progress) -->
+    <rect id="hotspot-panel-interact" class="door-hotspot" x="300" y="100" width="1000" height="700" fill="transparent" cursor="pointer" style="display: none;" />
+
+
+    <!-- Back to Monitor -->
+    <rect id="exit-panel" class="door-hotspot" x="0" y="800" width="1600" height="100" fill="transparent" cursor="pointer" />
+  </svg>
+
+  <!-- OS Container - Positioned over monitor screen area -->
+  <div id="os-container" class="os-container">
+    <div class="os-viewport">
+      <div class="os-screen">
+        <div class="os-power-overlay" id="os-power-overlay">
+        <button class="os-power-button" id="os-power-button">Power On</button>
+      </div>
+
+      <div class="os-boot-screen" id="os-boot-screen">
+        <div class="os-boot-panel">
+          <div class="os-boot-title">DOOM-SYS BOOTLOADER</div>
+          <div class="os-boot-log" id="os-boot-log"></div>
+          <div class="os-boot-bar">
+            <div class="os-boot-fill" id="os-boot-fill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="os-topbar">
+        <span>DOOM-SYS / HELL NODE</span>
+        <span id="os-clock-top">00:00</span>
+      </div>
+
+      <div class="os-desktop" id="os-desktop">
+        <div class="os-desktop-area" id="os-desktop-area">
+          <div class="os-icons">
+            <div class="os-icon" data-app="terminal">
+              <div class="os-icon-glyph"></div>
+              <span>Terminal</span>
+            </div>
+            <div class="os-icon" data-app="logs">
+              <div class="os-icon-glyph"></div>
+              <span>Logs</span>
+            </div>
+            <div class="os-icon" data-app="status">
+              <div class="os-icon-glyph"></div>
+              <span>Status</span>
+            </div>
+          </div>
+
+          <div class="os-hint">double-click icons to open</div>
+
+          <div class="os-window" data-window="terminal" style="left: 100px; top: 50px; width: 300px; height: 180px;">
+            <div class="os-titlebar">
+              <div class="os-titlebar-left">terminal.exe</div>
+              <div class="os-titlebar-buttons">
+                <button data-action="minimize">_</button>
+                <button data-action="maximize">□</button>
+                <button data-action="close">×</button>
+              </div>
+            </div>
+            <div class="os-window-content">
+              <div class="os-terminal-output" id="os-terminal-output">DOOM shell initialized.
+Type "help" for commands.</div>
+              <div class="os-terminal-input-row">
+                <span class="os-prompt">></span>
+                <input class="os-terminal-input" id="os-terminal-input" autocomplete="off" placeholder="enter command..." />
+              </div>
+            </div>
+          </div>
+
+          <div class="os-window hidden" data-window="logs" style="left: 150px; top: 100px; width: 280px; height: 170px;">
+            <div class="os-titlebar">
+              <div class="os-titlebar-left">logs.dat</div>
+              <div class="os-titlebar-buttons">
+                <button data-action="minimize">_</button>
+                <button data-action="maximize">□</button>
+                <button data-action="close">×</button>
+              </div>
+            </div>
+            <div class="os-window-content">
+              <h3>Recent Logs</h3>
+              <div class="os-logs">
+                <div class="os-log-line">[22:14] Demon activity detected</div>
+                <div class="os-log-line">[22:15] Security breach</div>
+                <div class="os-log-line">[22:17] Portal unstable</div>
+                <div class="os-log-line">[22:18] Emergency lockdown</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="os-window hidden" data-window="status" style="left: 200px; top: 70px; width: 250px; height: 150px;">
+            <div class="os-titlebar">
+              <div class="os-titlebar-left">status.sys</div>
+              <div class="os-titlebar-buttons">
+                <button data-action="minimize">_</button>
+                <button data-action="maximize">□</button>
+                <button data-action="close">×</button>
+              </div>
+            </div>
+            <div class="os-window-content">
+              <h3>System Status</h3>
+              <div class="os-status-item">
+                <span class="os-status-label">CPU:</span>
+                <span class="os-status-value">66%</span>
+              </div>
+              <div class="os-status-item">
+                <span class="os-status-label">RAM:</span>
+                <span class="os-status-value">640KB</span>
+              </div>
+              <div class="os-status-item">
+                <span class="os-status-label">Network:</span>
+                <span class="os-status-value online">INFERNAL</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="os-taskbar">
+          <button class="os-start-btn" id="os-start-button">menu</button>
+          <div id="os-task-buttons"></div>
+          <div class="os-spacer"></div>
+          <div id="os-clock-bottom">00:00</div>
+        </div>
+      </div>
+
+      <div class="os-crt-noise"></div>
+      <div class="os-crt-flicker"></div>
+      <div class="os-crt-lines"></div>
+      <div class="os-screen-vignette"></div>
+      <div class="os-screen-glass"></div>
+    </div>
+  </div>
+</div>
+
+  <script src="js/ui-manager.js"></script>
+  <script src="js/os-manager.js"></script>
+  <script src="js/scene-manager.js"></script>
+  <script src="js/portrait-manager.js"></script>
+  <script src="js/puzzle-manager.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>

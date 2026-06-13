@@ -96,6 +96,8 @@ const PuzzleManager = {
     // Cycle through solved states
     if (this.currentState === this.states.SOLVED_ON) {
       this.currentState = this.states.SOLVED_OPEN;
+      // Key falls out event
+      GameManager.onKeyFound();
     } else if (this.currentState === this.states.SOLVED_OPEN) {
       this.currentState = this.states.SOLVED_CLOSED;
     } else if (this.currentState === this.states.SOLVED_CLOSED) {

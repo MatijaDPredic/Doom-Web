@@ -266,9 +266,9 @@
 
     <!-- Toggle Hotspots -->
     <g id="hotspot-group">
-      <rect id="hotspot-left" class="door-hotspot" x="380" y="220" width="200" height="350" fill="transparent" cursor="pointer" />
-      <rect id="hotspot-center" class="door-hotspot" x="700" y="220" width="200" height="350" fill="transparent" cursor="pointer" />
-      <rect id="hotspot-right" class="door-hotspot" x="1020" y="220" width="200" height="350" fill="transparent" cursor="pointer" />
+      <rect id="hotspot-left" class="door-hotspot" x="650" y="285" width="64" height="125" fill="transparent" cursor="pointer"></rect>
+      <rect id="hotspot-center" class="door-hotspot" x="740" y="285" width="63" height="125" fill="transparent" cursor="pointer"></rect>
+      <rect id="hotspot-right" class="door-hotspot" x="836" y="285" width="64" height="125" fill="transparent" cursor="pointer"></rect>
     </g>
 
     <!-- Interaction Hotspot for Solved States (allows clicking the panel itself to progress) -->
@@ -317,9 +317,27 @@
               <div class="os-icon-glyph"></div>
               <span>Status</span>
             </div>
+            <div class="os-icon" data-app="doom">
+              <div class="os-icon-glyph os-icon-doom"></div>
+              <span>DOOM</span>
+            </div>
           </div>
 
           <div class="os-hint">double-click icons to open</div>
+
+          <div class="os-window hidden" data-window="doom" style="left: 20px; top: 20px; width: 580px; height: 390px;">
+            <div class="os-titlebar">
+              <div class="os-titlebar-left">doom.exe</div>
+              <div class="os-titlebar-buttons">
+                <button data-action="minimize">_</button>
+                <button data-action="maximize">□</button>
+                <button data-action="close">×</button>
+              </div>
+            </div>
+            <div class="os-window-content os-doom-content" id="os-doom-content">
+              <!-- Doom iframe is injected here by OSManager.initDoom() -->
+            </div>
+          </div>
 
           <div class="os-window" data-window="terminal" style="left: 100px; top: 50px; width: 300px; height: 180px;">
             <div class="os-titlebar">
@@ -393,6 +411,16 @@ Type "help" for commands.</div>
           <div class="os-spacer"></div>
           <div id="os-clock-bottom">00:00</div>
         </div>
+
+        <!-- Start Menu -->
+        <div class="os-start-menu hidden" id="os-start-menu">
+          <div class="os-start-menu-header">DOOM-SYS</div>
+          <div class="os-start-menu-item" data-start-app="terminal">Terminal</div>
+          <div class="os-start-menu-item" data-start-app="logs">Logs</div>
+          <div class="os-start-menu-item" data-start-app="status">Status</div>
+          <div class="os-start-menu-sep"></div>
+          <div class="os-start-menu-item" data-start-app="doom">DOOM.EXE</div>
+        </div>
       </div>
 
       <div class="os-crt-noise"></div>
@@ -404,10 +432,75 @@ Type "help" for commands.</div>
   </div>
 </div>
 
+  <!-- Controls Reference Overlay (outside OS, like dialogue) -->
+  <div id="controls-reference" class="controls-reference">
+    <div class="controls-ref-header">
+      <span>DOOM CONTROLS</span>
+      <button id="controls-ref-close" class="controls-ref-close" title="Hide controls">&times;</button>
+    </div>
+    <div class="os-keys-grid">
+      <div class="os-keys-section">
+        <div class="os-keys-section-title">Movement</div>
+        <div class="os-key-line"><span class="os-key">W / S</span> <span class="os-key-desc">Forward / Back</span></div>
+        <div class="os-key-line"><span class="os-key">A / D</span> <span class="os-key-desc">Strafe Left / Right</span></div>
+        <div class="os-key-line"><span class="os-key">← →</span> <span class="os-key-desc">Turn</span></div>
+        <div class="os-key-line"><span class="os-key">RShift</span> <span class="os-key-desc">Run</span></div>
+        <div class="os-key-line"><span class="os-key">RAlt + ← →</span> <span class="os-key-desc">Strafe (alt method)</span></div>
+        <div class="os-key-line"><span class="os-key">/</span> <span class="os-key-desc">180° Turn</span></div>
+      </div>
+      <div class="os-keys-section">
+        <div class="os-keys-section-title">Combat</div>
+        <div class="os-key-line"><span class="os-key">RCtrl</span> <span class="os-key-desc">Shoot</span></div>
+        <div class="os-key-line"><span class="os-key">Space</span> <span class="os-key-desc">Use / Open</span></div>
+        <div class="os-key-line"><span class="os-key">1 – 7</span> <span class="os-key-desc">Weapons</span></div>
+        <div class="os-key-line"><span class="os-key">MWheel</span> <span class="os-key-desc">Prev / Next Weapon</span></div>
+      </div>
+      <div class="os-keys-section">
+        <div class="os-keys-section-title">Interface</div>
+        <div class="os-key-line"><span class="os-key">Esc</span> <span class="os-key-desc">Menu</span></div>
+        <div class="os-key-line"><span class="os-key">F1</span> <span class="os-key-desc">Help</span></div>
+        <div class="os-key-line"><span class="os-key">Tab</span> <span class="os-key-desc">Auto-map</span></div>
+        <div class="os-key-line"><span class="os-key">F2 / F3</span> <span class="os-key-desc">Save / Load</span></div>
+        <div class="os-key-line"><span class="os-key">F6 / F9</span> <span class="os-key-desc">Quick-Save / Load</span></div>
+        <div class="os-key-line"><span class="os-key">F10</span> <span class="os-key-desc">Quit</span></div>
+        <div class="os-key-line"><span class="os-key">~</span> <span class="os-key-desc">Console</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating toggle button — appears when controls panel is hidden -->
+  <button id="controls-ref-show" class="controls-ref-show" title="Show controls">?</button>
+
+  <!-- Dialogue UI -->
+  <div id="dialogue-container" class="dialogue-container">
+    <div id="dialogue-speaker" class="dialogue-speaker"></div>
+    <div id="dialogue-text" class="dialogue-text"></div>
+    <div id="dialogue-choices" class="dialogue-choices"></div>
+    <div id="dialogue-prompt" class="dialogue-prompt">PRESS SPACE / CLICK TO ADVANCE</div>
+  </div>
+
+  <!-- Item Acquisition Popup -->
+  <div id="item-popup" class="item-popup">
+    <div class="item-card">
+      <div class="item-label">Item Obtained</div>
+      <div class="item-image-container">
+        <img id="item-popup-image" class="item-image" src="" alt="Item" />
+      </div>
+      <div class="item-info">
+        <div id="item-popup-name" class="item-name">Item Name</div>
+        <div id="item-popup-desc" class="item-desc">Item description goes here.</div>
+      </div>
+      <div class="item-popup-hint">Click or press any key to continue</div>
+    </div>
+  </div>
+
   <script src="js/ui-manager.js"></script>
   <script src="js/os-manager.js"></script>
   <script src="js/scene-manager.js"></script>
   <script src="js/portrait-manager.js"></script>
+  <script src="js/dialogue-manager.js"></script>
+  <script src="js/item-manager.js"></script>
+  <script src="js/game-manager.js"></script>
   <script src="js/puzzle-manager.js"></script>
   <script src="js/main.js"></script>
 </body>

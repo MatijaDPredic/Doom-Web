@@ -314,6 +314,11 @@ body::after {
   background: rgba(255,176,0,0.05);
 }
 
+.os-icon.selected {
+  border-color: rgba(255,176,0,0.55);
+  background: rgba(255,176,0,0.12);
+}
+
 .os-icon-glyph {
   width: 24px;
   height: 18px;
@@ -354,9 +359,16 @@ body::after {
 }
 
 .os-window.maximized {
-  inset: 6px 6px 6px 86px !important;
+  inset: 28px 0 24px 0 !important;
   width: auto !important;
   height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border-radius: 0;
+}
+
+.os-window.maximized .os-resize-handle {
+  display: none;
 }
 
 .os-titlebar {
@@ -559,14 +571,251 @@ body::after {
   background: rgba(255, 176, 0, 0.05);
 }
 
+/* Block iframe pointer events during drag/resize so the iframe
+   doesn't steal mousemove events from the document handlers */
+body.is-resizing iframe {
+  pointer-events: none !important;
+}
+
+/* Resize handles — edge strips + corner grips */
 .os-resize-handle {
   position: absolute;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* Edge handles */
+.os-resize-handle[data-resize="n"] {
+  top: 0;
+  left: 8px;
+  right: 8px;
+  height: 6px;
+  cursor: n-resize;
+}
+.os-resize-handle[data-resize="s"] {
   bottom: 0;
+  left: 8px;
+  right: 8px;
+  height: 6px;
+  cursor: s-resize;
+}
+.os-resize-handle[data-resize="e"] {
+  top: 8px;
+  bottom: 8px;
   right: 0;
-  width: 12px;
-  height: 12px;
-  cursor: se-resize;
-  background: linear-gradient(135deg, transparent 50%, rgba(255, 176, 0, 0.4) 50%);
+  width: 6px;
+  cursor: e-resize;
+}
+.os-resize-handle[data-resize="w"] {
+  top: 8px;
+  bottom: 8px;
+  left: 0;
+  width: 6px;
+  cursor: w-resize;
+}
+
+.os-resize-handle:hover {
+  background-color: rgba(255, 176, 0, 0.12);
+}
+
+/* Dialogue System */
+.dialogue-container {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(90%, 800px);
+  min-height: 120px;
+  background: rgba(10, 8, 4, 0.92);
+  border: 2px solid rgba(255, 176, 0, 0.25);
+  box-shadow: 
+    0 0 30px rgba(0, 0, 0, 0.8),
+    inset 0 0 20px rgba(255, 176, 0, 0.05);
+  padding: 20px 25px;
+  color: #ffb000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  line-height: 1.5;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  user-select: none;
+  cursor: pointer;
+}
+
+.dialogue-container.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dialogue-speaker {
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ff8b6a;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.dialogue-text {
+  text-shadow: 0 0 8px rgba(255, 176, 0, 0.4);
+}
+
+.dialogue-prompt {
+  position: absolute;
+  bottom: 12px;
+  right: 20px;
+  font-size: 12px;
+  opacity: 0;
+  color: rgba(255, 176, 0, 0.5);
+  animation: blink 1s infinite;
+}
+
+.dialogue-prompt.visible {
+  opacity: 1;
+}
+
+/* Item Acquisition Popup */
+.item-popup {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(4px);
+}
+
+.item-popup.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.item-card {
+  width: min(90%, 400px);
+  background: rgba(15, 12, 5, 0.98);
+  border: 2px solid rgba(255, 176, 0, 0.3);
+  box-shadow: 
+    0 0 50px rgba(0, 0, 0, 1),
+    inset 0 0 30px rgba(255, 176, 0, 0.05);
+  padding: 30px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  transform: scale(0.9);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.item-popup.active .item-card {
+  transform: scale(1);
+}
+
+.item-image-container {
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(255, 176, 0, 0.1) 0%, transparent 70%);
+  filter: drop-shadow(0 0 15px rgba(255, 176, 0, 0.2));
+}
+
+.item-image {
+  max-width: 100%;
+  max-height: 100%;
+  image-rendering: pixelated;
+}
+
+.item-info {
+  width: 100%;
+}
+
+.item-label {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: rgba(255, 176, 0, 0.6);
+  letter-spacing: 0.2em;
+  margin-bottom: 8px;
+}
+
+.item-name {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 22px;
+  color: #ffb000;
+  text-shadow: 0 0 10px rgba(255, 176, 0, 0.5);
+  margin-bottom: 12px;
+}
+
+.item-desc {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  color: rgba(255, 176, 0, 0.8);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.item-popup-hint {
+  margin-top: 10px;
+  font-size: 11px;
+  color: rgba(255, 176, 0, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Block interactions when modal is active */
+body.modal-active .door-hotspot,
+body.modal-active .dialogue-container {
+  pointer-events: none !important;
+}
+
+.dialogue-choices {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dialogue-choices.active {
+  display: flex;
+}
+
+.dialogue-choice-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 176, 0, 0.4);
+  color: #ffb000;
+  padding: 10px 15px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.dialogue-choice-btn:hover,
+.dialogue-choice-btn:focus {
+  background: rgba(255, 176, 0, 0.1);
+  border-color: #ffb000;
+  box-shadow: 0 0 10px rgba(255, 176, 0, 0.2);
+}
+
+/* Block interactions when dialogue is active */
+body.dialogue-active .door-hotspot {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 @keyframes flicker {
@@ -591,7 +840,211 @@ body::after {
   100% { text-shadow: 0.8px 0 1px rgba(255,30,0,0.35), -0.8px 0 1px rgba(255,0,80,0.22), 0 0 3px rgba(255,80,60,0.14); }
 }
 
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0; }
+.os-icon-doom {
+  background-image: radial-gradient(circle, #ff0000 20%, transparent 70%);
+  border-color: #ff4444 !important;
+}
+
+.os-doom-content {
+  padding: 0 !important;
+  background: #050505;
+  overflow: hidden !important;
+}
+
+/* Controls Reference Overlay — fixed outside OS, like dialogue */
+.controls-reference {
+  position: fixed;
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
+  width: 270px;
+  max-height: 80vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: rgba(10, 8, 4, 0.92);
+  border: 2px solid rgba(255, 176, 0, 0.25);
+  box-shadow:
+    0 0 30px rgba(0, 0, 0, 0.8),
+    inset 0 0 20px rgba(255, 176, 0, 0.05);
+  padding: 16px;
+  color: #ffb000;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  z-index: 105;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  user-select: none;
+}
+
+.controls-reference.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.controls-reference::-webkit-scrollbar {
+  display: none;
+}
+
+.controls-ref-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 176, 0, 0.2);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 13px;
+}
+
+.controls-ref-close {
+  background: none;
+  border: 1px solid rgba(255, 176, 0, 0.2);
+  color: rgba(255, 176, 0, 0.5);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0 5px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.controls-ref-close:hover {
+  color: #ffb000;
+  background: rgba(255, 176, 0, 0.1);
+  border-color: rgba(255, 176, 0, 0.4);
+}
+
+/* Floating show button — appears when controls panel is hidden */
+.controls-ref-show {
+  position: fixed;
+  top: 50%;
+  left: 24px;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  background: rgba(10, 8, 4, 0.92);
+  border: 2px solid rgba(255, 176, 0, 0.3);
+  color: rgba(255, 176, 0, 0.6);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 105;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+}
+
+.controls-ref-show.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.controls-ref-show:hover {
+  color: #ffb000;
+  background: rgba(20, 15, 5, 0.96);
+  border-color: rgba(255, 176, 0, 0.5);
+}
+
+/* Keybinding Reference Panel */
+.os-keys-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.os-keys-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.os-keys-section-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 176, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 176, 0, 0.12);
+  padding-bottom: 3px;
+  margin-bottom: 2px;
+}
+
+.os-key-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 12px;
+}
+
+.os-key {
+  color: #ffb000;
+  font-weight: bold;
+  background: rgba(255, 176, 0, 0.08);
+  border: 1px solid rgba(255, 176, 0, 0.2);
+  padding: 1px 6px;
+  text-shadow: 0 0 6px rgba(255, 176, 0, 0.3);
+  flex-shrink: 0;
+}
+
+.os-key-desc {
+  color: rgba(255, 176, 0, 0.65);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Start Menu */
+.os-start-menu {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  width: 160px;
+  background: rgba(15, 12, 5, 0.96);
+  border: 1px solid rgba(255,176,0,0.3);
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  padding: 4px 0;
+  z-index: 100;
+  font-size: 11px;
+}
+
+.os-start-menu.hidden {
+  display: none;
+}
+
+.os-start-menu-header {
+  padding: 8px 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #ffb000;
+  border-bottom: 1px solid rgba(255,176,0,0.2);
+  margin-bottom: 4px;
+}
+
+.os-start-menu-item {
+  padding: 6px 12px;
+  cursor: pointer;
+  color: #ffb000;
+  transition: background 0.1s;
+}
+
+.os-start-menu-item:hover {
+  background: rgba(255,176,0,0.15);
+}
+
+.os-start-menu-sep {
+  height: 1px;
+  background: rgba(255,176,0,0.15);
+  margin: 4px 8px;
 }

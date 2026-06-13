@@ -18,15 +18,5 @@ const UIManager = {
 
     setInterval(updateClock, 1000);
     updateClock();
-  },
-
-  updateSceneVisibility(sceneName) {
-    // Scene visibility is handled by CSS classes via SceneManager
-    // This method can be used for additional UI updates if needed
-  },
-
-  updateOSVisibility() {
-    // OS visibility is handled by OSManager state
-    // This method can be used for additional UI updates if needed
   }
 };

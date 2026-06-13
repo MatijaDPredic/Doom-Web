@@ -6,7 +6,7 @@ Early-stage school project focused on bringing DOOM to the browser with WebAssem
 
 This repository is still in the setup / early integration phase.
 
-The project already includes the upstream DoomGeneric engine as the base for the port, while the current web layer is being built separately with HTML, CSS, and JavaScript.
+The project already includes the cloudflare/doom-wasm engine as the base for the port, while the current web layer is being built separately with HTML, CSS, and JavaScript.
 
 At the moment, the interface includes a scene-based navigation prototype with:
 - an exterior mansion scene
